@@ -1,42 +1,36 @@
 /* ===== デザイントークン ===== */
 :root {
-  /* インク（文字・ボタン・罫線）—— 彩度のある色は使わない */
   --ink:        #15262E;
-  --text:       #4D5156;  /* 本文の文字色 */
+  --text:       #4D5156;
   --ink-soft:   #5C6E75;
   --ink-faint:  #8E9C9F;
 
-  /* 面 */
-  --paper:      #FFFFFF;  /* ページ背景は白 */
+  --paper:      #FFFFFF;
   --hover:      #F5F6F4;  /* 行のホバー背景（背景が白なので、わずかに灰色にする）*/
   --surface:    #FFFFFF;
   --line:       #DDE2E1;
   --line-strong:#C3CBCA;
 
-  /* 天気（この 3 色だけが彩度を持つ）*/
   --w-clear:    #C4851B;
   --w-cloud:    #4A96A3;
   --w-rain:     #2160AD;
 
-  /* 操作の色（ボタン・メッセージ）*/
-  --action:       #00A86B;  /* 主ボタン・成功メッセージ */
+  --action:       #00A86B;
   --action-hover: #009660;
-  --accent:       #FF5F1F;  /* 「最初の記録をつける」（空の状態）のボタンのみ */
+  --accent:       #FF5F1F;
   --accent-hover: #FF7A45;
-  --on-action:    #FFFFFF;     /* 緑ボタンの文字色 */
+  --on-action:    #FFFFFF;
   --on-accent:    var(--ink);  /* オレンジの上に置く文字色。白だとコントラスト 3:1 台で足りない */
 
-  --danger:     #9B2C2C;  /* 削除ボタン・警告/エラーメッセージ */
+  --danger:     #9B2C2C;
 
-  /* 余白（4px 基準） */
   --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
 
-  /* 角丸 —— 役割ごとに変える */
   --r-chip:    2px;
   --r-control: 4px;
   --r-surface: 6px;
-  --r-button:  999px; /* ボタンは丸くする */
+  --r-button:  999px;
 }
 
 /* ===== 基本 ===== */
@@ -49,7 +43,6 @@ body {
   font-size: 16px;
 }
 
-/* 数字は等幅にして桁を揃える */
 .num { font-variant-numeric: tabular-nums; }
 
 h1, h2, h3 { font-weight: 700; }
@@ -97,7 +90,6 @@ h1, h2, h3,
   --bs-btn-disabled-border-color: var(--action);
 }
 
-/* 空の状態の「最初の記録をつける」だけのオレンジ */
 .btn-accent {
   --bs-btn-color: var(--on-accent);
   --bs-btn-bg: var(--accent);
@@ -110,13 +102,11 @@ h1, h2, h3,
   --bs-btn-active-border-color: var(--accent-hover);
 }
 
-/* 副ボタン＝枠線のみ */
 .btn-outline-secondary {
   color: var(--ink);
   border-color: var(--line-strong);
 }
 
-/* 削除は確認画面でのみ色を使う */
 .btn-danger {
   --bs-btn-bg: var(--danger);
   --bs-btn-border-color: var(--danger);
@@ -126,7 +116,6 @@ h1, h2, h3,
   --bs-btn-active-border-color: #7F2222;
 }
 
-/* 入力欄 */
 .form-control, .form-select {
   border: 1px solid var(--line-strong);
   border-radius: var(--r-control);
@@ -142,11 +131,9 @@ h1, h2, h3,
 .form-text  { color: var(--ink-soft); font-size: 13px; }
 .invalid-feedback, .form-error { color: var(--danger); font-size: 13px; display: block; }
 
-/* リンク＝インク色＋下線 */
 a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
 a:hover { color: var(--ink-soft); }
 
-/* キーボード操作の時だけ輪郭を出す */
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 /* ===== ヘッダー ===== */
@@ -195,7 +182,7 @@ a:hover { color: var(--ink-soft); }
   border-radius: var(--r-control);
   padding: var(--s3) var(--s4);
   margin-bottom: var(--s4);
-  background: var(--action);   /* success */
+  background: var(--action);
   color: var(--on-accent);
 }
 /* 警告・エラーは赤。白文字で 4.5:1 以上を確保 */
@@ -238,7 +225,6 @@ a:hover { color: var(--ink-soft); }
 
 
 
-/* 行の天気アイコン */
 .weather-inline { display: inline-flex; align-items: center; gap: var(--s1); }
 .weather-inline img { width: 20px; height: 20px; }
 

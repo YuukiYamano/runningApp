@@ -13,7 +13,7 @@ from .forms import ProfileForm, RecordForm, SignUpForm
 from .models import Profile, RunRecord, Weather, format_pace
 from .weather import GROUP_LABELS, fetch_weather
 
-BAR_MAX_PX = 56  # 月のサマリーの棒の最大の高さ
+BAR_MAX_PX = 56
 
 
 class TopView(TemplateView):
@@ -53,7 +53,6 @@ def build_month_summary(user):
         .order_by("created_at")  # 同じ日は最初の記録の天気を使う
     )
 
-    # 日ごとに距離を合計する
     days = {d: {"distance": Decimal("0"), "group": None} for d in range(1, last_day + 1)}
     total_distance = Decimal("0")
     total_duration = 0
@@ -121,13 +120,12 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
     template_name = "records/record_form.html"
 
     def get_initial(self):
-        # 都市の初期値はプロフィールの「よく走る都市」
         profile = Profile.objects.filter(user=self.request.user).first()
         return {"activity_type": "run", "city": profile.default_city if profile else ""}
 
     def form_valid(self, form):
         form.instance.user = self.request.user  # user はフォームから受け取らない
-        response = super().form_valid(form)  # 記録を保存する
+        response = super().form_valid(form)
         messages.success(self.request, "記録しました。")
 
         # 無料プランは現在の天気しか取れないので、今日の記録だけ取得する

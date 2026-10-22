@@ -83,5 +83,4 @@ class ProfileForm(forms.ModelForm):
         widgets = {"default_city": forms.TextInput(attrs={"class": "form-control"})}
 
     def clean_default_city(self):
-        # 任意項目。前後の空白だけ除去する
         return self.cleaned_data["default_city"].strip()

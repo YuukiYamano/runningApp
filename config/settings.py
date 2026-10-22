@@ -79,7 +79,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# ログイン関連の遷移先
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "record_list"
 LOGOUT_REDIRECT_URL = "top"
