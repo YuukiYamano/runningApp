@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}RunLog — 走った日の天気まで記録する{% endblock %}
+{% block container_class %}container-wide{% endblock %}
+
+{% block content %}
+  <h1 class="lead-title">走った日の天気まで記録する</h1>
+
+  <p class="lead-text">
+    距離と時間を入力すると、その日の天気を自動で取得して一緒に保存します。
+  </p>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="{% url 'signup' %}">アカウントを作成</a>
+    <a href="{% url 'login' %}">ログインはこちら</a>
+  </div>
+
+  {# 記録の見た目を見せるためのサンプル。DB からは取らない #}
+  <div class="record-list">
+    <div class="record-row">
+      <div class="edge" data-group="clear"></div>
+      <div class="body">
+        <div>10/22(水) ランニング</div>
+        <div class="distance num">8.20 km</div>
+        <div class="sub">晴れ 18℃</div>
+        <div class="sub-right num">48分 · 5'51"/km</div>
+      </div>
+    </div>
+    <div class="record-row">
+      <div class="edge" data-group="rain"></div>
+      <div class="body">
+        <div>10/20(月) 散歩</div>
+        <div class="distance num">2.40 km</div>
+        <div class="sub">雨 14℃</div>
+        <div class="sub-right num">31分 · 12'55"/km</div>
+      </div>
+    </div>
+    <div class="record-row">
+      <div class="edge" data-group="none"></div>
+      <div class="body">
+        <div>10/19(日) ランニング</div>
+        <div class="distance num">10.00 km</div>
+        <div class="sub">天気の記録なし</div>
+        <div class="sub-right num">62分 · 6'12"/km</div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

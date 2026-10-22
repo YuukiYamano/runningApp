@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}アカウントを作成 — RunLog{% endblock %}
+{% block container_class %}container-narrow{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">アカウントを作成</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {% for error in form.non_field_errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+        {% for error in field.errors %}
+          <p class="form-error">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary w-100">アカウントを作成する</button>
+  </form>
+
+  <p class="meta mt-3">
+    アカウントをお持ちの方は <a href="{% url 'login' %}">ログイン</a>
+  </p>
+{% endblock %}

@@ -1,0 +1,19 @@
+# 環境変数（絶対にコミットしない）
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Django
+*.log
+db.sqlite3
+
+# OS / エディタ
+.DS_Store
+.idea/
+.vscode/
+DESIGN.md
+CLAUDE.md

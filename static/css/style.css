@@ -1,0 +1,203 @@
+/* ===== デザイントークン ===== */
+:root {
+  /* インク（文字・ボタン・罫線）—— 彩度のある色は使わない */
+  --ink:        #15262E;
+  --ink-soft:   #5C6E75;
+  --ink-faint:  #8E9C9F;
+
+  /* 面 */
+  --paper:      #F5F6F4;
+  --surface:    #FFFFFF;
+  --line:       #DDE2E1;
+  --line-strong:#C3CBCA;
+
+  /* 天気（この 3 色だけが彩度を持つ）*/
+  --w-clear:    #C4851B;
+  --w-cloud:    #4A96A3;
+  --w-rain:     #2160AD;
+
+  --danger:     #9B2C2C;
+
+  /* 余白（4px 基準） */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+
+  /* 角丸 —— 役割ごとに変える */
+  --r-chip:    2px;
+  --r-control: 4px;
+  --r-surface: 6px;
+}
+
+/* ===== 基本 ===== */
+body {
+  font-family: "Zen Kaku Gothic New", -apple-system, "Hiragino Sans",
+               "Noto Sans JP", sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.75;
+  font-size: 16px;
+}
+
+/* 数字は等幅にして桁を揃える */
+.num { font-variant-numeric: tabular-nums; }
+
+h1, h2, h3 { font-weight: 700; }
+.page-title    { font-size: 25px; margin-bottom: var(--s5); }
+.section-title { font-size: 20px; margin-bottom: var(--s3); }
+.meta { font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
+
+/* ===== レイアウト ===== */
+.container-app {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: var(--s6) var(--s4) var(--s8);
+}
+.container-wide { max-width: 60rem; }
+.container-narrow { max-width: 24rem; padding-top: var(--s8); }
+
+@media (min-width: 768px) {
+  .container-app { padding-left: var(--s6); padding-right: var(--s6); }
+}
+
+/* ===== Bootstrap の上書き ===== */
+/* 主ボタン＝インク色。青にしない */
+.btn-primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  border-radius: var(--r-control);
+  padding: 10px 20px;
+  font-weight: 500;
+}
+.btn-primary:hover,
+.btn-primary:focus { background: #0E1A20; border-color: #0E1A20; }
+
+/* 副ボタン＝枠線のみ */
+.btn-outline-secondary {
+  color: var(--ink);
+  border-color: var(--line-strong);
+  border-radius: var(--r-control);
+}
+
+/* 削除は確認画面でのみ色を使う */
+.btn-danger { background: var(--danger); border-color: var(--danger); }
+
+/* 入力欄 */
+.form-control, .form-select {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  padding: 10px 12px;
+  font-size: 16px;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(21, 38, 46, .12);
+}
+.form-label { font-weight: 500; margin-bottom: var(--s1); }
+.form-text  { color: var(--ink-soft); font-size: 13px; }
+.invalid-feedback, .form-error { color: var(--danger); font-size: 13px; display: block; }
+
+/* リンク＝インク色＋下線 */
+a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--ink-soft); }
+
+/* キーボード操作の時だけ輪郭を出す */
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* ===== ヘッダー ===== */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .inner {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: var(--s3) var(--s4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+}
+.site-header .brand {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.site-header nav { display: flex; align-items: center; gap: var(--s4); }
+
+/* POST 送信のログアウトボタンをリンクの見た目に揃える */
+.link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.link-button:hover { color: var(--ink-soft); }
+.link-danger { color: var(--danger); }
+.link-danger:hover { color: var(--danger); }
+
+@media (max-width: 575px) {
+  .site-header nav { gap: var(--s3); font-size: 13px; }
+  .site-header nav .link-button { font-size: 13px; }
+}
+
+/* ===== メッセージ ===== */
+.message {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ink);
+  border-radius: var(--r-control);
+  padding: var(--s3) var(--s4);
+  margin-bottom: var(--s4);
+}
+.message.warning { border-left-color: var(--w-clear); }
+.message.error   { border-left-color: var(--danger); }
+
+/* ===== 記録の行 ===== */
+.record-list {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-surface);
+  overflow: hidden;
+}
+.record-row {
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  gap: 0 var(--s4);
+  padding: var(--s3) var(--s4);
+  text-decoration: none;
+  color: var(--ink);
+}
+.record-row:hover { background: var(--paper); color: var(--ink); }
+.record-row + .record-row { border-top: 1px solid var(--line); }
+.record-row .edge { background: var(--w-clear); border-radius: var(--r-chip); }
+/* 日付・種別と距離を 1 行目、天気と時間を 2 行目に置く */
+.record-row .body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 var(--s4);
+  align-items: baseline;
+}
+.record-row .edge[data-group="clear"] { background: var(--w-clear); }
+.record-row .edge[data-group="cloud"] { background: var(--w-cloud); }
+.record-row .edge[data-group="rain"]  { background: var(--w-rain); }
+.record-row .edge[data-group="none"]  { background: none;
+              border-left: 1px dashed var(--line-strong); }
+.record-row .distance { font-size: 20px; font-weight: 700; text-align: right; }
+.record-row .sub { font-size: 13px; color: var(--ink-soft); }
+.record-row .sub-right { font-size: 13px; color: var(--ink-soft); text-align: right; }
+
+
+
+/* ===== トップページ ===== */
+.lead-title { font-size: 31px; font-weight: 700; margin-bottom: var(--s4); }
+.lead-text  { max-width: 34rem; margin-bottom: var(--s5); }
+.cta-row { display: flex; align-items: center; gap: var(--s4); margin-bottom: var(--s7); }
+
+/* ===== 操作への応答以外のアニメーションは付けない ===== */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
