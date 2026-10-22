@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}プロフィール — RunLog{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">プロフィール</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.default_city.id_for_label }}">よく走る都市</label>
+      {{ form.default_city }}
+      <div class="form-text">新しく記録するときの都市名の初期値になります。</div>
+      {% for error in form.default_city.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">保存する</button>
+    </div>
+  </form>
+{% endblock %}

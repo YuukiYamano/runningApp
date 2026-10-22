@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from .models import RunRecord
+from .models import Profile, RunRecord
 
 
 class SignUpForm(UserCreationForm):
@@ -72,3 +72,16 @@ class RecordForm(forms.ModelForm):
         if len(memo) > 1000:
             raise forms.ValidationError("メモは 1000 文字以内で入力してください。")
         return memo
+
+
+class ProfileForm(forms.ModelForm):
+    """プロフィール（よく走る都市）の編集フォーム。"""
+
+    class Meta:
+        model = Profile
+        fields = ["default_city"]
+        widgets = {"default_city": forms.TextInput(attrs={"class": "form-control"})}
+
+    def clean_default_city(self):
+        # 任意項目。前後の空白だけ除去する
+        return self.cleaned_data["default_city"].strip()

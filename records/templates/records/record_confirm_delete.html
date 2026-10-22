@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}記録を削除する — RunLog{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">この記録を削除しますか</h1>
+
+  <p class="num">
+    {{ object.date|date:"n/j(D)" }} {{ object.get_activity_type_display }} {{ object.distance_km }} km
+  </p>
+  <p class="meta">削除すると元に戻せません。</p>
+
+  <form method="post" class="form-actions">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">削除する</button>
+    <a href="{% url 'record_detail' object.pk %}">キャンセル</a>
+  </form>
+{% endblock %}

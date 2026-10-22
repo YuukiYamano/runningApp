@@ -7,9 +7,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
-from .forms import RecordForm, SignUpForm
+from .forms import ProfileForm, RecordForm, SignUpForm
 from .models import Profile, RunRecord, Weather, format_pace
 from .weather import GROUP_LABELS, fetch_weather
 
@@ -141,3 +141,51 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("record_detail", kwargs={"pk": self.object.pk})
+
+
+class RecordUpdateView(LoginRequiredMixin, UpdateView):
+    """記録の編集。記録した時点の天気を残すため、天気は再取得しない。"""
+
+    form_class = RecordForm
+    template_name = "records/record_form.html"
+
+    def get_queryset(self):
+        return RunRecord.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        messages.success(self.request, "保存しました。")
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("record_detail", kwargs={"pk": self.object.pk})
+
+
+class RecordDeleteView(LoginRequiredMixin, DeleteView):
+    """削除の確認画面。POST されたときだけ削除する。"""
+
+    template_name = "records/record_confirm_delete.html"
+    success_url = reverse_lazy("record_list")
+
+    def get_queryset(self):
+        return RunRecord.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        messages.success(self.request, "削除しました。")
+        return super().form_valid(form)
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    """プロフィール（よく走る都市）の編集。"""
+
+    form_class = ProfileForm
+    template_name = "records/profile_form.html"
+    success_url = reverse_lazy("profile")
+
+    def get_object(self):
+        # 管理画面で作ったユーザーなど Profile がない場合に備えて作成する
+        profile, _ = Profile.objects.get_or_create(user=self.request.user)
+        return profile
+
+    def form_valid(self, form):
+        messages.success(self.request, "保存しました。")
+        return super().form_valid(form)

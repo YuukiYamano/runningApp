@@ -17,7 +17,7 @@
       <nav>
         {% if user.is_authenticated %}
           <a href="{% url 'record_list' %}">記録</a>
-          {# プロフィールへのリンクはフェーズ 3 で追加する #}
+          <a href="{% url 'profile' %}">プロフィール</a>
           <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <button type="submit" class="link-button">ログアウト</button>
