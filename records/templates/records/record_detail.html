@@ -38,6 +38,6 @@
 
   <div class="detail-actions">
     <a class="btn btn-primary" href="{% url 'record_edit' object.pk %}">編集する</a>
-    <a class="link-danger" href="{% url 'record_delete' object.pk %}">削除する</a>
+    <a class="link-delete" href="{% url 'record_delete' object.pk %}">削除する</a>
   </div>
 {% endblock %}
