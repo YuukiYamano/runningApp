@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.date|date:"n月j日" }} {{ object.get_activity_type_display }} — RunLog{% endblock %}
+
+{% block content %}
+  <a class="back-link" href="{% url 'record_list' %}">記録一覧にもどる</a>
+
+  <h1 class="detail-date">
+    {{ object.date|date:"n月j日(D)" }}<span class="kind">{{ object.get_activity_type_display }}</span>
+  </h1>
+
+  <div class="detail-distance num">{{ object.distance_km }}<span class="unit">km</span></div>
+  <div class="detail-time num">{{ object.duration_min }}分{% if object.pace %} · {{ object.pace }}/km{% endif %}</div>
+
+  {% if object.weather %}
+    {% with w=object.weather %}
+      <div class="weather-panel">
+        <div class="edge" data-group="{{ w.group }}"></div>
+        <img src="https://openweathermap.org/img/wn/{{ w.icon }}@2x.png" alt="{{ w.description }}">
+        <div>
+          <div class="label">{{ w.group_label }}</div>
+          <div class="num">{{ w.temp }}℃　湿度 {{ w.humidity }}%</div>
+          <div class="num">風 {{ w.wind_speed }} m/s</div>
+          <div class="meta num">{{ object.city }} · {{ w.fetched_at|date:"n/j G:i" }} 取得</div>
+        </div>
+      </div>
+    {% endwith %}
+  {% else %}
+    <p class="meta detail-section">この記録に天気はありません</p>
+  {% endif %}
+
+  {% if object.memo %}
+    <section class="detail-section">
+      <h2 class="section-title">メモ</h2>
+      {{ object.memo|linebreaks }}
+    </section>
+  {% endif %}
+
+  {# 「編集する」「削除する」はフェーズ 3 で追加する #}
+{% endblock %}

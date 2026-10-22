@@ -3,8 +3,68 @@
 {% block title %}記録 — RunLog{% endblock %}
 
 {% block content %}
-  <h1 class="page-title">記録</h1>
+  {% if page_obj.paginator.count == 0 %}
+    <div class="empty">
+      <h1>まだ記録がありません</h1>
+      <p>走った距離と時間を入力すると、その日の天気もあわせて保存します。</p>
+      <a class="btn btn-primary" href="{% url 'record_new' %}">最初の記録をつける</a>
+    </div>
+  {% else %}
+    <section class="month-summary">
+      <h2>{{ summary.year }}年{{ summary.month }}月</h2>
+      <div class="month-total num">{{ summary.total_distance|floatformat:1 }}<span class="unit">km</span></div>
+      <div class="month-meta num">
+        {{ summary.count }}回 · 合計 {{ summary.duration_text }}{% if summary.pace %} · 平均 {{ summary.pace }}/km{% endif %}
+      </div>
 
-  {# 一覧の中身（月のサマリー・記録の行・ページ送り）はフェーズ 2 で作る #}
-  <p class="meta">記録一覧はこれから作ります。</p>
+      <div class="month-strip">
+        {% for bar in summary.bars %}
+          <div class="bar" data-group="{{ bar.group }}" style="height: {{ bar.height }}px" title="{{ bar.title }}"></div>
+        {% endfor %}
+      </div>
+      <div class="month-axis num"><span>1</span><span>10</span><span>20</span><span>{{ summary.last_day }}</span></div>
+
+      <div class="legend">
+        <span><span class="swatch" data-group="clear"></span>晴れ</span>
+        <span><span class="swatch" data-group="cloud"></span>くもり</span>
+        <span><span class="swatch" data-group="rain"></span>雨</span>
+        <span><span class="swatch" data-group="none"></span>天気なし</span>
+      </div>
+    </section>
+
+    <div class="list-actions">
+      <a class="btn btn-primary" href="{% url 'record_new' %}">記録する</a>
+    </div>
+
+    <div class="record-list">
+      {% for record in records %}
+        <a class="record-row" href="{% url 'record_detail' record.pk %}">
+          <div class="edge" data-group="{{ record.weather_group }}"></div>
+          <div class="body">
+            <div>{{ record.date|date:"n/j(D)" }} {{ record.get_activity_type_display }}</div>
+            <div class="distance num">{{ record.distance_km }} km</div>
+            <div class="sub">
+              {% if record.weather %}
+                <span class="weather-inline">
+                  <img src="https://openweathermap.org/img/wn/{{ record.weather.icon }}@2x.png" alt="{{ record.weather.description }}">
+                  {{ record.weather.group_label }} <span class="num">{{ record.weather.temp|floatformat:0 }}℃</span>
+                </span>
+              {% else %}
+                天気の記録なし
+              {% endif %}
+            </div>
+            <div class="sub-right num">{{ record.duration_min }}分{% if record.pace %} · {{ record.pace }}/km{% endif %}</div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+      <nav class="pager" aria-label="ページ送り">
+        {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">前のページ</a>{% endif %}
+        <span class="current num">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">次のページ</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
 {% endblock %}

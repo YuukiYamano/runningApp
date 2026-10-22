@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object.pk %}記録を編集する{% else %}記録する{% endif %} — RunLog{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">{% if object.pk %}記録を編集する{% else %}記録する{% endif %}</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {% for error in form.non_field_errors %}
+      <p class="form-error">{{ error }}</p>
+    {% endfor %}
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.activity_type.id_for_label }}">種別</label>
+      <div class="field-narrow">{{ form.activity_type }}</div>
+      {% for error in form.activity_type.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.date.id_for_label }}">日付</label>
+      <div class="field-narrow">{{ form.date }}</div>
+      <div class="form-text">今日の日付で登録すると、その日の天気を自動で保存します。</div>
+      {% for error in form.date.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.distance_km.id_for_label }}">距離</label>
+      <div class="input-unit">
+        <div class="field-narrow">{{ form.distance_km }}</div><span>km</span>
+      </div>
+      {% for error in form.distance_km.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.duration_min.id_for_label }}">時間</label>
+      <div class="input-unit">
+        <div class="field-narrow">{{ form.duration_min }}</div><span>分</span>
+      </div>
+      {% for error in form.duration_min.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.city.id_for_label }}">都市</label>
+      {{ form.city }}
+      <div class="form-text">天気を取得する都市名。英語で入力してください（例: Tokyo, Osaka）。</div>
+      {% for error in form.city.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.memo.id_for_label }}">メモ</label>
+      {{ form.memo }}
+      <div class="form-text">任意です。1000 文字まで。</div>
+      {% for error in form.memo.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">{% if object.pk %}保存する{% else %}記録する{% endif %}</button>
+      <a href="{% if object.pk %}{% url 'record_detail' object.pk %}{% else %}{% url 'record_list' %}{% endif %}">キャンセル</a>
+    </div>
+  </form>
+{% endblock %}

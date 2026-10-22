@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
+from .weather import GROUP_LABELS, WEATHER_GROUPS
+
 
 def format_pace(duration_min, distance_km):
     """1km あたりのペースを 6'08" の形式で返す。距離が 0 なら None。"""
@@ -47,6 +49,11 @@ class RunRecord(models.Model):
         """1km あたりのペース。距離が 0 なら None。"""
         return format_pace(self.duration_min, self.distance_km)
 
+    @property
+    def weather_group(self):
+        """天気の色グループ。天気がない記録は "none"。"""
+        return self.weather.group if hasattr(self, "weather") else "none"
+
 
 class Weather(models.Model):
     """記録した日の天気。記録 1 件につき 0 件または 1 件。"""
@@ -62,3 +69,12 @@ class Weather(models.Model):
 
     def __str__(self):
         return f"{self.record_id} の天気: {self.main}"
+
+    @property
+    def group(self):
+        """clear / cloud / rain のどれか。"""
+        return WEATHER_GROUPS.get(self.main, "cloud")
+
+    @property
+    def group_label(self):
+        return GROUP_LABELS[self.group]

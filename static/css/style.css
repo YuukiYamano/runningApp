@@ -192,6 +192,68 @@ a:hover { color: var(--ink-soft); }
 
 
 
+/* 行の天気アイコン */
+.weather-inline { display: inline-flex; align-items: center; gap: var(--s1); }
+.weather-inline img { width: 20px; height: 20px; }
+
+/* ===== 月のサマリー ===== */
+.month-summary { margin-bottom: var(--s6); }
+.month-summary h2 { font-size: 20px; margin-bottom: var(--s2); }
+.month-total { font-size: 31px; font-weight: 700; line-height: 1.3; }
+.month-total .unit { font-size: 16px; margin-left: var(--s1); }
+.month-meta { color: var(--ink-soft); font-size: 13px; margin-bottom: var(--s4); }
+.month-strip { display: flex; align-items: flex-end; gap: 2px; height: 56px;
+               border-bottom: 1px solid var(--line); }
+.month-strip .bar { flex: 1 1 0; min-width: 6px; border-radius: 3px 3px 0 0; }
+.month-strip .bar[data-group="clear"] { background: var(--w-clear); }
+.month-strip .bar[data-group="cloud"] { background: var(--w-cloud); }
+.month-strip .bar[data-group="rain"]  { background: var(--w-rain); }
+.month-strip .bar[data-group="none"]  { background: var(--line-strong); }
+.month-axis { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-soft); }
+.legend { display: flex; flex-wrap: wrap; gap: var(--s4); font-size: 13px; margin-top: var(--s2); }
+.legend .swatch { display: inline-block; width: 10px; height: 10px; margin-right: var(--s1);
+                  border-radius: var(--r-chip); background: var(--line-strong); }
+.legend .swatch[data-group="clear"] { background: var(--w-clear); }
+.legend .swatch[data-group="cloud"] { background: var(--w-cloud); }
+.legend .swatch[data-group="rain"]  { background: var(--w-rain); }
+
+.list-actions { display: flex; justify-content: flex-end; margin-bottom: var(--s3); }
+
+/* ===== ページ送り ===== */
+.pager { display: flex; justify-content: center; align-items: center; gap: var(--s5);
+         margin-top: var(--s5); font-size: 13px; }
+.pager .current { font-weight: 500; }
+
+/* ===== 空の状態 ===== */
+.empty h1 { font-size: 20px; margin-bottom: var(--s2); }
+.empty p { margin-bottom: var(--s4); }
+
+/* ===== 詳細 ===== */
+.back-link { display: inline-block; font-size: 13px; margin-bottom: var(--s4); }
+.detail-date { font-size: 25px; font-weight: 700; margin-bottom: var(--s4); }
+.detail-date .kind { font-size: 16px; font-weight: 400; color: var(--ink-soft); margin-left: var(--s2); }
+.detail-distance { font-size: 31px; font-weight: 700; line-height: 1.3; }
+.detail-distance .unit { font-size: 16px; margin-left: var(--s1); }
+.detail-time { margin-bottom: var(--s6); }
+.detail-section { margin-bottom: var(--s6); }
+.detail-actions { display: flex; align-items: center; gap: var(--s5); }
+
+.weather-panel {
+  display: grid; grid-template-columns: 4px 40px 1fr; gap: var(--s3);
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-surface); padding: var(--s4); margin-bottom: var(--s6);
+}
+.weather-panel .edge { background: var(--w-clear); border-radius: var(--r-chip); }
+.weather-panel .edge[data-group="cloud"] { background: var(--w-cloud); }
+.weather-panel .edge[data-group="rain"]  { background: var(--w-rain); }
+.weather-panel img { width: 40px; height: 40px; }
+.weather-panel .label { font-size: 20px; font-weight: 700; line-height: 1.4; }
+
+/* ===== フォーム ===== */
+.field-narrow { max-width: 10rem; }
+.input-unit { display: flex; align-items: center; gap: var(--s2); }
+.form-actions { display: flex; align-items: center; gap: var(--s5); margin-top: var(--s5); }
+
 /* ===== トップページ ===== */
 .lead-title { font-size: 31px; font-weight: 700; margin-bottom: var(--s4); }
 .lead-text  { max-width: 34rem; margin-bottom: var(--s5); }
