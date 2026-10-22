@@ -2,6 +2,7 @@
 :root {
   /* インク（文字・ボタン・罫線）—— 彩度のある色は使わない */
   --ink:        #15262E;
+  --text:       #4D5156;  /* 本文の文字色 */
   --ink-soft:   #5C6E75;
   --ink-faint:  #8E9C9F;
 
@@ -19,10 +20,11 @@
 
   /* 操作の色（ボタン・メッセージ）*/
   --action:       #00A86B;  /* 主ボタン・成功メッセージ */
-  --action-hover: #0DB878;  /* ホバーは明るくする（暗くするとインク文字のコントラストが下がる）*/
+  --action-hover: #009660;
   --accent:       #FF5F1F;  /* 「最初の記録をつける」（空の状態）のボタンのみ */
   --accent-hover: #FF7A45;
-  --on-accent:    var(--ink);  /* 上の 2 色の上に置く文字色。白だとコントラスト 3:1 台で足りない */
+  --on-action:    #FFFFFF;     /* 緑ボタンの文字色 */
+  --on-accent:    var(--ink);  /* オレンジの上に置く文字色。白だとコントラスト 3:1 台で足りない */
 
   --danger:     #9B2C2C;  /* 削除ボタン・警告/エラーメッセージ */
 
@@ -41,7 +43,7 @@
 body {
   font-family: "Zen Kaku Gothic New", -apple-system, "Hiragino Sans",
                "Noto Sans JP", sans-serif;
-  color: var(--ink);
+  color: var(--text);
   background: var(--paper);
   line-height: 1.75;
   font-size: 16px;
@@ -51,6 +53,11 @@ body {
 .num { font-variant-numeric: tabular-nums; }
 
 h1, h2, h3 { font-weight: 700; }
+
+/* 見出し・大きな数字は本文より濃いインク色のまま */
+h1, h2, h3,
+.detail-date, .detail-distance, .month-total,
+.record-row .distance, .weather-panel .label { color: var(--ink); }
 .page-title    { font-size: 25px; margin-bottom: var(--s5); }
 .section-title { font-size: 20px; margin-bottom: var(--s3); }
 .meta { font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
@@ -76,16 +83,16 @@ h1, h2, h3 { font-weight: 700; }
   font-weight: 500;
 }
 .btn-primary {
-  --bs-btn-color: var(--on-accent);
+  --bs-btn-color: var(--on-action);
   --bs-btn-bg: var(--action);
   --bs-btn-border-color: var(--action);
-  --bs-btn-hover-color: var(--on-accent);
+  --bs-btn-hover-color: var(--on-action);
   --bs-btn-hover-bg: var(--action-hover);
   --bs-btn-hover-border-color: var(--action-hover);
-  --bs-btn-active-color: var(--on-accent);
+  --bs-btn-active-color: var(--on-action);
   --bs-btn-active-bg: var(--action-hover);
   --bs-btn-active-border-color: var(--action-hover);
-  --bs-btn-disabled-color: var(--on-accent);
+  --bs-btn-disabled-color: var(--on-action);
   --bs-btn-disabled-bg: var(--action);
   --bs-btn-disabled-border-color: var(--action);
 }
@@ -130,6 +137,7 @@ h1, h2, h3 { font-weight: 700; }
   border-color: var(--ink);
   box-shadow: 0 0 0 3px rgba(21, 38, 46, .12);
 }
+.form-control, .form-select { color: var(--text); }
 .form-label { font-weight: 500; margin-bottom: var(--s1); }
 .form-text  { color: var(--ink-soft); font-size: 13px; }
 .invalid-feedback, .form-error { color: var(--danger); font-size: 13px; display: block; }
@@ -207,9 +215,9 @@ a:hover { color: var(--ink-soft); }
   gap: 0 var(--s4);
   padding: var(--s3) var(--s4);
   text-decoration: none;
-  color: var(--ink);
+  color: var(--text);
 }
-.record-row:hover { background: var(--hover); color: var(--ink); }
+.record-row:hover { background: var(--hover); color: var(--text); }
 .record-row + .record-row { border-top: 1px solid var(--line); }
 .record-row .edge { background: var(--w-clear); border-radius: var(--r-chip); }
 /* 日付・種別と距離を 1 行目、天気と時間を 2 行目に置く */
